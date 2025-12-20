@@ -1,0 +1,17 @@
+# Compiler outputs
+build/
+bin/
+out/
+*.exe
+*.dll
+*.pdb
+*.obj
+
+# IDE specific
+.vs/
+.vscode/
+*.user
+*.suo
+
+# External (Optional: if you want others to download their own)
+# For now, if your 'external' folder is small, keep it.
