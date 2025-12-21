@@ -1,4 +1,4 @@
-# GTA III Internal Trainer (v0.1)
+# GTA III Internal Trainer (v0.2)
 
 An internal mod menu for **Grand Theft Auto III (Steam)** using ImGui and Minhook.
 All Memory Addresses used have been manually found by me without searching them online, as i also wanted to improve my RE skills, i did occasionally check the re3 repo to look at the already reverse engineered code, to sort of see how the game works in certain aspects.
@@ -10,10 +10,16 @@ All Memory Addresses used have been manually found by me without searching them 
 - **Player Module:**
   - Health & Armor editing.
   - Money manipulation.
+  - Godmode
+  - Never Wanted
+  - Set Wanted Level
   - Coordinate-based Teleportation (X, Y, Z).
 - **Vehicle Module:**
   - Vehicle Spawner.
   - **The "Rhino Exploit":** The Spawner modifies the GIVEUSATANK cheat to be able to spawn any wheeled vehicle, to fully function, i created a codecave and redirected the execution towards it, this had to be done since it could only spawn ids up until 127, which i presume was due to a compiler optimization since the rhino id was 122.
+- **Weapon Module:**
+    - Weapon spawning
+    - Includes options as set ammo, set infinite ammo, get all weapons at once.
 - **UI:**
   - Toggle visibility with the **F5** key.
 
