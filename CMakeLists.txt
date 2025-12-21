@@ -23,7 +23,6 @@ add_library(gta3_trainer SHARED
     src/ui/Menu.cpp
     src/ui/ImGuiHook.cpp
     src/game/Player.cpp
-    src/game/Resolver.cpp
     src/game/Vehicles.cpp
     src/game/Utils.cpp
 
