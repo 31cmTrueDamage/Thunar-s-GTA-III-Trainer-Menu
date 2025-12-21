@@ -23,6 +23,15 @@ All Memory Addresses used have been manually found by me without searching them 
 - **UI:**
   - Toggle visibility with the **F5** key.
 
+---
+
+## 📸 Preview
+<p align="center">
+  <img src="img/preview.png" width="600" alt="GTA III Trainer Menu">
+</p>
+
+---
+
 ## 🚀 Building from Source
 
 This project uses **CMake** and **MinGW-w64**.
