@@ -9,6 +9,12 @@ namespace Offsets {
 
     constexpr uintptr_t ARMOR = 0x2C4;
 
+    constexpr uintptr_t MOVEMENT_TYPE = 0x22C;
+
+    constexpr uintptr_t WANTED_LEVEL_ADDRESS = 0x53C;
+
+    constexpr uintptr_t WANTED_LEVEL_STARS_OFFSET = 0x18;
+
     constexpr uintptr_t X_POS = 0x34;
 
     constexpr uintptr_t Y_POS = 0x38;
@@ -33,4 +39,17 @@ namespace Offsets {
 
     constexpr uintptr_t CREATE_MODEL_FUNCTION = 0X12CB60;
 
+    constexpr uintptr_t WEAPON_ARRAY_START = 0x35C;
+
+    constexpr uintptr_t WEAPON_BAT = 0x374;
+    constexpr uintptr_t WEAPON_PISTOL = 0x38C;
+    constexpr uintptr_t WEAPON_SMG = 0x3A4;
+    constexpr uintptr_t WEAPON_SHOTGUN = 0x3BC;
+    constexpr uintptr_t WEAPON_AK = 0x3D4;
+    constexpr uintptr_t WEAPON_M4 = 0x3EC;
+    constexpr uintptr_t WEAPON_SNIPER = 0x404;
+    constexpr uintptr_t WEAPON_ROCKET_LAUNCHER = 0x41C;
+    constexpr uintptr_t WEAPON_FLAMETHROWER = 0x434;
+    constexpr uintptr_t WEAPON_MOLOTOV = 0x44C;
+    constexpr uintptr_t WEAPON_GRENADE = 0x464;
 }
