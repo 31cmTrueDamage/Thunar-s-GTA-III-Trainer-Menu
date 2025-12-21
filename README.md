@@ -1,6 +1,7 @@
 # GTA III Internal Trainer (v0.1)
 
 An internal mod menu for **Grand Theft Auto III (Steam)**.
+All Memory Addresses used have been manually found by me without searching them online, as i also wanted to improve my RE skills, i did occasionally check the re3 repo to look at the already reverse engineered code, to sort of see how the game works in certain aspects.
 
 ---
 
@@ -12,7 +13,7 @@ An internal mod menu for **Grand Theft Auto III (Steam)**.
   - Coordinate-based Teleportation (X, Y, Z).
 - **Vehicle Module:**
   - Vehicle Spawner.
-  - **The "Rhino Exploit":** Custom assembly codecave to bypass the game's hardcoded sign-extension bug, allowing stable spawning of any vehicle model thought the GIVEUSATANK cheat code.
+  - **The "Rhino Exploit":** The Spawner modifies the GIVEUSATANK cheat to be able to spawn any wheeled vehicle, to fully function, i created a codecave and redirected the execution towards it, this had to be done since it could only spawn ids up until 127, which i presume was dued to a compiler optimization since the rhino id was 122.
 - **UI:**
   - Toggle visibility with the **F5** key.
 
