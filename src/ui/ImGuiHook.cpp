@@ -6,6 +6,7 @@
 #include "imgui.h"
 #include "imgui_impl_dx9.h"
 #include "imgui_impl_win32.h"
+#include "../game/Player.h"
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -241,6 +242,28 @@ HRESULT __stdcall hkEndScene(LPDIRECT3DDEVICE9 device)
     ImGui_ImplDX9_NewFrame();
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();
+
+    if (Player::GetHealthAddress() != 0) 
+    {
+        if (UI::Cheats::godMode) 
+        {
+            Player::SetHealth(100.0f);
+            Player::SetArmor(100.0f);
+        }
+
+        if (UI::Cheats::infiniteAmmo) 
+        {
+            for (const auto& weapon : WeaponData::WEAPON_LIST) 
+            {
+                Player::SetAmmo(weapon, 999);
+            }
+        }
+
+        if (UI::Cheats::neverWanted)
+        {
+            Player::SetWantedLevel(0);
+        }
+    }
     
     // Cursor management
     ImGuiIO& io = ImGui::GetIO();

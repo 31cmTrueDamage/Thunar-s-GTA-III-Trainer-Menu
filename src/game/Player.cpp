@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "Resolver.h"
+#include "../core/WeaponData.h"
 #include "Offsets.h"
 #include "Utils.h"
 #include <windows.h>
@@ -88,6 +88,40 @@ uintptr_t Player::Get_Z_Axis_Address() {
     return cpedBase + Offsets::Z_POS;
 }
 
+uintptr_t Player::GetWeaponAddress(int id) {
+
+    if (id < 1 || id > 11) {
+        return 0;
+    }
+
+    uintptr_t moduleBase = Utils::GetModuleBase();
+    if (!moduleBase) return 0;
+
+    uintptr_t player_pointer = (moduleBase + Offsets::PLAYER_PED_PTR);
+
+    uintptr_t player_base = *(uintptr_t*)player_pointer;
+
+    uintptr_t weapon_pointer = (player_base + Offsets::WEAPON_ARRAY_START) + (0x18 * id);
+
+    return weapon_pointer;
+}
+
+uintptr_t Player::GetWantedLevelAddress(){
+    uintptr_t moduleBase = Utils::GetModuleBase();
+    if (!moduleBase) return 0;
+
+    uintptr_t player_pointer = (moduleBase + Offsets::PLAYER_PED_PTR);
+
+    uintptr_t wanted_class_address = *(uintptr_t*)player_pointer;
+    if (wanted_class_address < 0x10000) return 0;
+
+    wanted_class_address = *(uintptr_t*)(wanted_class_address + Offsets::WANTED_LEVEL_ADDRESS);
+
+    uintptr_t stars_address = (wanted_class_address + Offsets::WANTED_LEVEL_STARS_OFFSET);
+
+    return stars_address;
+}
+
 void Player::Set_X_Axis(float value) {
     uintptr_t addr = Get_X_Axis_Address();
     if (addr)
@@ -168,4 +202,48 @@ int Player::GetMoney() {
     if (addr)
         return *(int*) addr;
     return 0;
+}
+
+int Player::GetWantedLevel() {
+    uintptr_t addr = GetWantedLevelAddress();
+    if (addr)
+        return *(int*) addr;
+    return 0;
+}
+
+void Player::GetWeapon(WeaponInfo weapon) {
+    uintptr_t weaponAddress = Player::GetWeaponAddress(weapon.id);
+    if (weaponAddress) {
+        *(int*)(weaponAddress) = weapon.id;
+        *(int*)(weaponAddress + 0x08) = weapon.clipCapacity;
+        *(int*)(weaponAddress + 0x0C) = weapon.defaultAmmo;
+    }
+}
+
+void Player::SetAmmo(WeaponInfo weapon, int amount) {
+    uintptr_t weaponAddress = Player::GetWeaponAddress(weapon.id);
+    if (weaponAddress) {
+        *(int*)(weaponAddress + 0x0C) = amount;
+    }
+}
+
+void Player::SetWantedLevel(int stars) {
+    if (stars > 6) stars = 6;
+    if (stars < 0) stars = 0;
+    uintptr_t addr = GetWantedLevelAddress();
+    int chaos = 0;
+    if (addr) {
+        switch (stars) {
+            case 0: chaos = 0; break;
+            case 1: chaos = 70; break;
+            case 2: chaos = 250; break;
+            case 3: chaos = 450; break;
+            case 4: chaos = 900; break;
+            case 5: chaos = 1800; break;
+            case 6: chaos = 3500; break;
+        }
+       *(int*)addr = stars;
+       uintptr_t chaosAddress = addr - 0x18;
+       *(int*)chaosAddress = chaos;
+    }
 }

@@ -1,7 +1,9 @@
 #pragma once
 #include <cstdint>
+#include "../core/WeaponData.h"
 
 class Player {
+    
 public:
     static uintptr_t GetHealthAddress();
     static uintptr_t GetArmorAddress();
@@ -9,7 +11,8 @@ public:
     static uintptr_t Get_X_Axis_Address();
     static uintptr_t Get_Y_Axis_Address();
     static uintptr_t Get_Z_Axis_Address();
-    
+    static uintptr_t GetWeaponAddress(int id);
+    static uintptr_t GetWantedLevelAddress();
 
     static void SetHealth(float value);
     static void SetArmor(float value);
@@ -23,4 +26,8 @@ public:
     static float Get_X_Axis();
     static float Get_Y_Axis();
     static float Get_Z_Axis();
+    static void GetWeapon(WeaponInfo weapon);
+    static void SetAmmo(WeaponInfo weapon, int amount);
+    static int GetWantedLevel();
+    static void SetWantedLevel(int level);
 };
