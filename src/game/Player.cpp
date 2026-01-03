@@ -122,6 +122,48 @@ uintptr_t Player::GetWantedLevelAddress(){
     return stars_address;
 }
 
+uintptr_t Player::Get_Z_Axis_VelocityAddress() {
+    uintptr_t moduleBase = Utils::GetModuleBase();
+    if (!moduleBase) return 0;
+
+    uintptr_t player_pointer = (moduleBase + Offsets::PLAYER_PED_PTR);
+
+    uintptr_t z_vel_address = *(uintptr_t*)player_pointer;
+    if (z_vel_address < 0x10000) return 0;
+
+    z_vel_address += Offsets::Z_VELOCITY_OFFSET;
+
+    return z_vel_address;
+}
+
+uintptr_t Player::Get_X_Axis_VelocityAddress() {
+    uintptr_t moduleBase = Utils::GetModuleBase();
+    if (!moduleBase) return 0;
+
+    uintptr_t player_pointer = (moduleBase + Offsets::PLAYER_PED_PTR);
+
+    uintptr_t x_vel_address = *(uintptr_t*)player_pointer;
+    if (x_vel_address < 0x10000) return 0;
+
+    x_vel_address += Offsets::X_VELOCITY_OFFSET;
+
+    return x_vel_address;
+}
+
+uintptr_t Player::Get_Y_Axis_VelocityAddress() {
+    uintptr_t moduleBase = Utils::GetModuleBase();
+    if (!moduleBase) return 0;
+
+    uintptr_t player_pointer = (moduleBase + Offsets::PLAYER_PED_PTR);
+
+    uintptr_t y_vel_address = *(uintptr_t*)player_pointer;
+    if (y_vel_address < 0x10000) return 0;
+
+    y_vel_address += Offsets::Y_VELOCITY_OFFSET;
+
+    return y_vel_address;
+}
+
 void Player::Set_X_Axis(float value) {
     uintptr_t addr = Get_X_Axis_Address();
     if (addr)
@@ -246,4 +288,49 @@ void Player::SetWantedLevel(int stars) {
        uintptr_t chaosAddress = addr - 0x18;
        *(int*)chaosAddress = chaos;
     }
+}
+
+void Player::Set_Z_Axis_Velocity(float vel) {
+    uintptr_t z_vel_address = Player::Get_Z_Axis_VelocityAddress();
+    if (z_vel_address) {
+        *(float*)z_vel_address = vel;
+    }
+}
+
+float Player::Get_Z_Axis_Velocity() {
+    uintptr_t z_vel_address = Player::Get_Z_Axis_VelocityAddress();
+    if (z_vel_address) {
+        return *(float*)z_vel_address;
+    }
+    return 0;
+}
+
+void Player::Set_X_Axis_Velocity(float vel) {
+    uintptr_t x_vel_address = Player::Get_X_Axis_VelocityAddress();
+    if (x_vel_address) {
+        *(float*)x_vel_address = vel;
+    }
+}
+
+float Player::Get_X_Axis_Velocity() {
+    uintptr_t x_vel_address = Player::Get_X_Axis_VelocityAddress();
+    if (x_vel_address) {
+        return *(float*)x_vel_address;
+    }
+    return 0;
+}
+
+void Player::Set_Y_Axis_Velocity(float vel) {
+    uintptr_t y_vel_address = Player::Get_Y_Axis_VelocityAddress();
+    if (y_vel_address) {
+        *(float*)y_vel_address = vel;
+    }
+}
+
+float Player::Get_Y_Axis_Velocity() {
+    uintptr_t y_vel_address = Player::Get_Y_Axis_VelocityAddress();
+    if (y_vel_address) {
+        return *(float*)y_vel_address;
+    }
+    return 0;
 }

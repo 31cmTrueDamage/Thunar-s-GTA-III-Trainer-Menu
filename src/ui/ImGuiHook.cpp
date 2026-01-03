@@ -263,6 +263,46 @@ HRESULT __stdcall hkEndScene(LPDIRECT3DDEVICE9 device)
         {
             Player::SetWantedLevel(0);
         }
+
+        if (UI::Cheats::superJump)
+        {
+            static bool jumped = false;
+            float zVel = Player::Get_Z_Axis_Velocity();
+            float xVel = Player::Get_X_Axis_Velocity();
+            float yVel = Player::Get_Y_Axis_Velocity();
+
+            if (zVel > 0.08f && zVel < 0.11f && !jumped) {
+                Player::Set_Z_Axis_Velocity(zVel * UI::Cheats::jumpMultiplier);
+                if (abs(xVel) > 0.01f) Player::Set_X_Axis_Velocity(xVel * UI::Cheats::jumpXYMultiplier);
+                if (abs(yVel) > 0.01f) Player::Set_Y_Axis_Velocity(yVel * UI::Cheats::jumpXYMultiplier);
+                jumped = true;
+            }
+
+            if (zVel < -0.05f) {
+                Player::Set_Z_Axis_Velocity(UI::Cheats::fallSpeed);
+            }
+
+            if (abs(zVel) < 0.001f) {
+                jumped = false; 
+            }
+        }
+
+        if (UI::Cheats::flyMode)
+        {
+            Player::Set_X_Axis_Velocity(0.0f);
+            Player::Set_Y_Axis_Velocity(0.0f);
+            Player::Set_Z_Axis_Velocity(0.0f);
+
+            float s = UI::Cheats::flySpeed;
+
+            if (GetAsyncKeyState('W') & 0x8000) Player::Set_X_Axis_Velocity(s);
+            if (GetAsyncKeyState('S') & 0x8000) Player::Set_X_Axis_Velocity(-s);
+            if (GetAsyncKeyState('D') & 0x8000) Player::Set_Y_Axis_Velocity(s);
+            if (GetAsyncKeyState('A') & 0x8000) Player::Set_Y_Axis_Velocity(-s);
+
+            if (GetAsyncKeyState(VK_SPACE) & 0x8000) Player::Set_Z_Axis_Velocity(s);
+            if (GetAsyncKeyState(VK_MENU) & 0x8000) Player::Set_Z_Axis_Velocity(-s);
+        }
     }
     
     // Cursor management

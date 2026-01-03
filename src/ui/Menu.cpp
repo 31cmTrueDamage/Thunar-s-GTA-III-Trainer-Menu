@@ -35,10 +35,47 @@ void UI::DrawMenu()
             ImGui::SameLine();
             ImGui::Checkbox("Never Wanted", &Cheats::neverWanted);
 
-            ImGui::Spacing();
+            ImGui::Text("Movement Physics");
+            ImGui::Separator();
+
+            ImGui::Checkbox("Super Jump", &Cheats::superJump);
+
+            if (ImGui::BeginCombo("Jump Presets", Cheats::selectedPreset == 0 ? "Custom" : (Cheats::selectedPreset == 1 ? "Normal" : (Cheats::selectedPreset == 2 ? "Crazy" : "Moon")))) {
+                if (ImGui::Selectable("Custom", Cheats::selectedPreset == 0)) Cheats::selectedPreset = 0;
+                if (ImGui::Selectable("Normal", Cheats::selectedPreset == 1)) {
+                    Cheats::selectedPreset = 1;
+                    Cheats::jumpMultiplier = 2.0f; Cheats::jumpXYMultiplier = 1.2f; Cheats::fallSpeed = -0.5f;
+                }
+                if (ImGui::Selectable("Crazy", Cheats::selectedPreset == 2)) {
+                    Cheats::selectedPreset = 2;
+                    Cheats::jumpMultiplier = 8.0f; Cheats::jumpXYMultiplier = 5.0f; Cheats::fallSpeed = -1.0f;
+                }
+                if (ImGui::Selectable("Moon", Cheats::selectedPreset == 3)) {
+                    Cheats::selectedPreset = 3;
+                    Cheats::jumpMultiplier = 4.0f; Cheats::jumpXYMultiplier = 0.8f; Cheats::fallSpeed = -0.05f;
+                }
+                ImGui::EndCombo();
+            }
+
+            if (!Cheats::superJump) ImGui::BeginDisabled();
+
+            // If they touch a slider, switch preset back to "Custom"
+            if (ImGui::SliderFloat("Z Power (Height)", &Cheats::jumpMultiplier, 1.0f, 20.0f)) Cheats::selectedPreset = 0;
+            if (ImGui::SliderFloat("XY Power (Distance)", &Cheats::jumpXYMultiplier, 1.0f, 10.0f)) Cheats::selectedPreset = 0;
+            if (ImGui::SliderFloat("Fall Speed (Landing)", &Cheats::fallSpeed, -2.0f, -0.01f)) Cheats::selectedPreset = 0;
+
+            if (!Cheats::superJump) ImGui::EndDisabled();
+            
             ImGui::Separator();
             ImGui::Spacing();
-            
+
+            ImGui::Checkbox("Fly Mode (Cardinal)", &Cheats::flyMode);
+    
+            if (Cheats::flyMode) {
+                ImGui::SliderFloat("Flight Power", &Cheats::flySpeed, 0.5f, 5.0f);
+                ImGui::TextDisabled("W/S: North/South | A/D: East/West");
+                ImGui::TextDisabled("Space: Up | Alt: Down");
+            }
             ImGui::Separator();
             ImGui::Spacing();
 
