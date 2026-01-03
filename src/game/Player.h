@@ -13,6 +13,9 @@ public:
     static uintptr_t Get_Z_Axis_Address();
     static uintptr_t GetWeaponAddress(int id);
     static uintptr_t GetWantedLevelAddress();
+    static uintptr_t Get_Z_Axis_VelocityAddress();
+    static uintptr_t Get_X_Axis_VelocityAddress();
+    static uintptr_t Get_Y_Axis_VelocityAddress();
 
     static void SetHealth(float value);
     static void SetArmor(float value);
@@ -30,4 +33,10 @@ public:
     static void SetAmmo(WeaponInfo weapon, int amount);
     static int GetWantedLevel();
     static void SetWantedLevel(int level);
+    static void Set_Z_Axis_Velocity(float velocity);
+    static float Get_Z_Axis_Velocity();
+    static void Set_X_Axis_Velocity(float velocity);
+    static float Get_X_Axis_Velocity();
+    static void Set_Y_Axis_Velocity(float velocity);
+    static float Get_Y_Axis_Velocity();
 };

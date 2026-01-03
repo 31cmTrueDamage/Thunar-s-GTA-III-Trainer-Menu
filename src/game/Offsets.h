@@ -52,4 +52,8 @@ namespace Offsets {
     constexpr uintptr_t WEAPON_FLAMETHROWER = 0x434;
     constexpr uintptr_t WEAPON_MOLOTOV = 0x44C;
     constexpr uintptr_t WEAPON_GRENADE = 0x464;
+
+    constexpr uintptr_t Z_VELOCITY_OFFSET = 0x80;
+    constexpr uintptr_t X_VELOCITY_OFFSET = 0x7C;
+    constexpr uintptr_t Y_VELOCITY_OFFSET = 0x78;
 }
