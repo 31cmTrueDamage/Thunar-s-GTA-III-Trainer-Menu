@@ -3,8 +3,13 @@ project(gta3_trainer)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# Force 32-bit build
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
+# Force 32-bit build (optional, only if you target 32-bit GTA III)
+set(CMAKE_C_FLAGS "-m32 -static-libgcc")
+set(CMAKE_CXX_FLAGS "-m32 -std=c++17 -static-libgcc -static-libstdc++")
+
+# Static linking flags
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static")
 
 # Add global define to fix _imp____acrt_iob_func
 add_definitions(-D_CRT_STDIO_INLINE)
@@ -14,7 +19,7 @@ include_directories(
     external/imgui
     external/imgui/backends
     external/minhook/include
-    D:/mingw64/i686-w64-mingw32/include
+    D:/mingw64/i686-w64-mingw32/include  # if really building 32-bit
 )
 
 # Source files
@@ -39,16 +44,18 @@ add_library(gta3_trainer SHARED
     external/minhook/src/hde/hde32.c
 )
 
-# Link libraries (XInput added for gamepad support)
+# Link Windows system libraries (static linking for runtime, dynamic for Windows APIs)
 target_link_libraries(gta3_trainer
     d3d9
     user32
+    gdi32
+    kernel32
+    advapi32
+    ole32
+    oleaut32
+    comdlg32
 )
 
+# Optional: 32-bit target on Windows
 set(CMAKE_SYSTEM_NAME Windows)
-set(CMAKE_GENERATOR_PLATFORM Win32) # explicitly 32-bit
-
-set(CMAKE_C_FLAGS "-m32 -static -static-libgcc -static-libstdc++")
-set(CMAKE_CXX_FLAGS "-m32 -std=c++17 -static -static-libgcc -static-libstdc++")
-
-link_directories(D:/mingw64/i686-w64-mingw32/lib)
+set(CMAKE_GENERATOR_PLATFORM Win32)

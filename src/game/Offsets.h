@@ -9,6 +9,10 @@ namespace Offsets {
 
     constexpr uintptr_t ARMOR = 0x2C4;
 
+    constexpr uintptr_t PLAYER_X_VECTOR = 0x14;
+    
+    constexpr uintptr_t PLAYER_Y_VECTOR = 0x18;
+
     constexpr uintptr_t MOVEMENT_TYPE = 0x22C;
 
     constexpr uintptr_t WANTED_LEVEL_ADDRESS = 0x53C;

@@ -1,4 +1,5 @@
 #include <windows.h>
+#include <math.h>
 #include <d3d9.h>
 #include "ImGuiHook.h" 
 #include "Menu.h"      
@@ -295,13 +296,36 @@ HRESULT __stdcall hkEndScene(LPDIRECT3DDEVICE9 device)
 
             float s = UI::Cheats::flySpeed;
 
-            if (GetAsyncKeyState('W') & 0x8000) Player::Set_X_Axis_Velocity(s);
-            if (GetAsyncKeyState('S') & 0x8000) Player::Set_X_Axis_Velocity(-s);
-            if (GetAsyncKeyState('D') & 0x8000) Player::Set_Y_Axis_Velocity(s);
-            if (GetAsyncKeyState('A') & 0x8000) Player::Set_Y_Axis_Velocity(-s);
+            float vX = 0.0f, vY = 0.0f;
+
+            float fwdX = Player::Get_X_Vector();
+            float fwdY = Player::Get_Y_Vector();
+
+            if (GetAsyncKeyState('W') & 0x8000) {
+                vX += fwdX * s;
+                vY += fwdY * s;
+            }
+
+            if (GetAsyncKeyState('S') & 0x8000) {
+                vX -= fwdX * s;
+                vY -= fwdY * s;
+            }
+
+            if (GetAsyncKeyState('D') & 0x8000) {
+                vX += fwdY * s;
+                vY -= fwdX * s;
+            }
+
+            if (GetAsyncKeyState('A') & 0x8000) {
+                vX -= fwdY * s;
+                vY += fwdX * s;
+            }
 
             if (GetAsyncKeyState(VK_SPACE) & 0x8000) Player::Set_Z_Axis_Velocity(s);
             if (GetAsyncKeyState(VK_MENU) & 0x8000) Player::Set_Z_Axis_Velocity(-s);
+
+            Player::Set_X_Axis_Velocity(vX);
+            Player::Set_Y_Axis_Velocity(vY);
         }
     }
     
