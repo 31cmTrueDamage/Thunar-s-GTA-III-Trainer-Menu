@@ -16,6 +16,9 @@ public:
     static uintptr_t Get_Z_Axis_VelocityAddress();
     static uintptr_t Get_X_Axis_VelocityAddress();
     static uintptr_t Get_Y_Axis_VelocityAddress();
+    static uintptr_t Get_X_VectorAddress();
+    static uintptr_t Get_Y_VectorAddress();
+
 
     static void SetHealth(float value);
     static void SetArmor(float value);
@@ -39,4 +42,7 @@ public:
     static float Get_X_Axis_Velocity();
     static void Set_Y_Axis_Velocity(float velocity);
     static float Get_Y_Axis_Velocity();
+    static float Get_X_Vector();
+    static float Get_Y_Vector();
+
 };

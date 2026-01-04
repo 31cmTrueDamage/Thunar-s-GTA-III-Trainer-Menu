@@ -164,6 +164,34 @@ uintptr_t Player::Get_Y_Axis_VelocityAddress() {
     return y_vel_address;
 }
 
+uintptr_t Player::Get_X_VectorAddress() {
+    uintptr_t moduleBase = Utils::GetModuleBase();
+    if (!moduleBase) return 0;
+
+    uintptr_t player_pointer = (moduleBase + Offsets::PLAYER_PED_PTR);
+
+    uintptr_t forward_address = *(uintptr_t*)player_pointer;
+    if (forward_address < 0x10000) return 0;
+
+    forward_address += Offsets::PLAYER_X_VECTOR;
+
+    return forward_address;
+}
+
+uintptr_t Player::Get_Y_VectorAddress() {
+    uintptr_t moduleBase = Utils::GetModuleBase();
+    if (!moduleBase) return 0;
+
+    uintptr_t player_pointer = (moduleBase + Offsets::PLAYER_PED_PTR);
+
+    uintptr_t forward_address = *(uintptr_t*)player_pointer;
+    if (forward_address < 0x10000) return 0;
+
+    forward_address += Offsets::PLAYER_Y_VECTOR;
+
+    return forward_address;
+}
+
 void Player::Set_X_Axis(float value) {
     uintptr_t addr = Get_X_Axis_Address();
     if (addr)
@@ -331,6 +359,22 @@ float Player::Get_Y_Axis_Velocity() {
     uintptr_t y_vel_address = Player::Get_Y_Axis_VelocityAddress();
     if (y_vel_address) {
         return *(float*)y_vel_address;
+    }
+    return 0;
+}
+
+float Player::Get_X_Vector() {
+    uintptr_t forward_vector_address = Player::Get_X_VectorAddress();
+    if (forward_vector_address) {
+        return *(float*)forward_vector_address;
+    }
+    return 0;
+}
+
+float Player::Get_Y_Vector() {
+    uintptr_t forward_vector_address = Player::Get_Y_VectorAddress();
+    if (forward_vector_address) {
+        return *(float*)forward_vector_address;
     }
     return 0;
 }

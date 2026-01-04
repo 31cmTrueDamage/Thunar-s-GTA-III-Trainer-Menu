@@ -11,7 +11,7 @@ namespace UI {
         inline float jumpXYMultiplier = 0;
         inline float fallSpeed = 0;
         inline int selectedPreset = 0;
-        inline bool flyMode = fallSpeed;
+        inline bool flyMode = false;
         inline float flySpeed = 0;
     }
 }
